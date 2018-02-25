@@ -16,7 +16,6 @@
     <table class="data">
         <tr>
             <th><spring:message code="label.login"/></th>
-            <th><spring:message code="label.password"/></th>
             <th><spring:message code="label.email"/></th>
             <th><spring:message code="label.telephone"/></th>
             <th>&nbsp;</th>
@@ -24,7 +23,6 @@
         <c:forEach items="${userList}" var="user">
             <tr>
                 <td>${user.login}</td>
-                <td>${user.password}</td>
                 <td>${user.email}</td>
                 <td>${user.phone}</td>
                 <td><a href="delete/${user.id_user}">Delete</a></td>

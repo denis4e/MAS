@@ -29,6 +29,11 @@
                                 <input type="submit" name="login" class="btn btn-lg btn-primary btn-block"
                                        value="<spring:message code="loginPage.submit"/>" required="required">
                             </form>
+                            <div>
+                                <div>
+                                    With Facebook: <a href="/mas/connect/facebook">click here</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

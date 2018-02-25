@@ -38,6 +38,9 @@ public class User {
     @NotEmpty
     private String lastName;
 
+    @Column(name = "fbId")
+    private String fbId;
+
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -120,6 +123,14 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getFbId() {
+        return fbId;
+    }
+
+    public void setFbId(String fbId) {
+        this.fbId = fbId;
     }
 }
 

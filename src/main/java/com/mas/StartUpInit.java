@@ -37,6 +37,7 @@ public class StartUpInit {
             adminUser.setLogin("admin");
             adminUser.setUserName("admin");
             adminUser.setLastName("admin");
+            adminUser.setFbId("2047007298847422");
             adminUser.setEnabled(true);
             adminUser.getRoles().add(admin);
             adminUser.getRoles().add(moderator);

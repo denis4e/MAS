@@ -1,0 +1,80 @@
+server:
+    contextPath: /mas
+    port: 8080
+spring:
+    application:
+        name: mas
+    datasource:
+        validationQuery: SELECT 1
+    freemarker:
+        charset: UTF-8
+        content-type: text/html
+        template-loader-path: /WEB-INF/views/emails/ , /WEB-INF/views/emails/registration/
+    http:
+        encoding:
+            charset: UTF-8
+            enabled: true
+            force: true
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        show-sql: true
+    mail:
+        default-encoding: UTF-8
+        host: smtp.gmail.com
+        password: denis07qaz
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+                        required: true
+        protocol: smtp
+        test-connection: false
+        username: denis.sosulev@gmail.com
+
+
+facebook:
+        client:
+            clientId: 330592920763743
+            clientSecret: b6c5fffa069f82690695c385c13ae191
+            accessTokenUri: https://graph.facebook.com/oauth/access_token
+            userAuthorizationUri: https://www.facebook.com/dialog/oauth
+            tokenName: oauth_token
+            authenticationScheme: query
+            clientAuthenticationScheme: form
+        resource:
+            userInfoUri: https://graph.facebook.com/me
+google:
+      client:
+        clientId: 12894100090-tqso3lih5o42isneort886la2pesafmp.apps.googleusercontent.com
+        clientSecret: 9xfU16efvxQ-BTMsXT9wOLpw
+        accessTokenUri: https://accounts.google.com/o/oauth2/token
+        userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+        clientAuthenticationScheme: form
+        scope: profile email
+      resource:
+        userInfoUri:  https://www.googleapis.com/oauth2/v3/userinfo
+linkedIn:
+      client:
+        clientId: 771mrzk94hye1w
+        clientSecret: iIJFgBf9lCb18zYe
+        accessTokenUri: https://www.linkedin.com/oauth/v2/accessToken
+        userAuthorizationUri: https://www.linkedin.com/oauth/v2/authorization
+      resource:
+        userInfoUri: https://api.linkedin.com/v1/people/~?format=json
+twitter:
+      client:
+        clientId: oXJIDGVdB0PDnMICDwKckyzKm
+        clientSecret: Z4BpN51kNsb2wbEfzDXm40v38W3I2P1u4H6fvfM6HQraVfry5j
+        accessTokenUri: https://api.twitter.com/oauth/access_token
+        userAuthorizationUri: https://api.twitter.com/oauth/authorize
+        clientAuthenticationScheme: form
+      resource:
+        userInfoUri:  https://api.twitter.com/1.1/users/show.json
+
