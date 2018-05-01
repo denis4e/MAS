@@ -1,12 +1,11 @@
-
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="tag" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!-- header-->
-<spring:message code="registration.page.title" var="title" />
-<tag:headWrapper pageTitle="${title}" />
+<spring:message code="registration.page.title" var="title"/>
+<tag:headWrapper pageTitle="${title}"/>
 
 <html>
 <body>
@@ -64,7 +63,8 @@
                                 <spring:message code="registration.label.email"/>
                             </label>
                             <div class="col-sm-4">
-                                <form:input type="text" id="email" class="form-control" path="email" placeholder="Email"/>
+                                <form:input type="text" id="email" class="form-control" path="email"
+                                            placeholder="Email"/>
                                 <form:errors id="emailError" path="email" cssClass="alert-danger"/>
                             </div>
                         </div>
@@ -85,7 +85,8 @@
                                 <spring:message code="registration.label.password"/>
                             </label>
                             <div class="col-sm-4">
-                                <form:input class="form-control" path="password" type="password" placeholder="Password"/>
+                                <form:input class="form-control" path="password" type="password"
+                                            placeholder="Password"/>
                                 <form:errors id="passwordError" path="password" cssClass="alert-danger"/>
                             </div>
                         </div>
@@ -93,7 +94,8 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="text-center">
-                                <button class="btn btn-primary btn-lg"><spring:message code="registration.register.user"/></button>
+                                <button class="btn btn-primary btn-lg"><spring:message
+                                        code="registration.register.user"/></button>
                             </div>
                         </div>
                     </div>

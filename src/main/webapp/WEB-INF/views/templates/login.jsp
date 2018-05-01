@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="login-help">
-                    <a id="login-link" href="<c:url value="/user/registration" />"><spring:message code="loginPage.register"/></a>
+                    <a href="<c:url value="/user/registration" />"><spring:message code="loginPage.register"/></a>
                     -
                     <a href="<c:url value="/user/sendPassword" />"><spring:message code="loginPage.password.forgot"/></a>
                 </div>
@@ -46,4 +46,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    if (window.location.hash && window.location.hash == '#_=_') {
+        window.location = 'facebook';
+    }
+</script>
 

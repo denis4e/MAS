@@ -6,6 +6,7 @@ import com.mas.dao.repository.UserRepository;
 import com.mas.domain.Role;
 import com.mas.domain.User;
 import com.mas.service.EmailService;
+import com.mas.service.UserUtil;
 import com.mas.util.Links;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -42,7 +44,8 @@ public class UserController {
 
     @Autowired
     private Messages messages;
-
+    @Autowired
+    UserUtil userUtils;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration() {
@@ -66,7 +69,7 @@ public class UserController {
         User userEmailExists = userRepository.findUserByEmail(user.getEmail());
         User userLoginExists = userRepository.findUserByLogin(user.getLogin());
 
-        if (userEmailExists != null ) {
+        if (userEmailExists != null) {
             bindingResult
                     .rejectValue("email", "errorMessage.userEmail.exists", "");
         }
@@ -124,6 +127,15 @@ public class UserController {
             modelAndView.addObject("errorMessage", messages.get("errorMessage.user.not.found"));
             modelAndView.setViewName(Links.SEND_PASSWORD);
         }
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
+    public ModelAndView userProfile() {
+        ModelAndView modelAndView = new ModelAndView();
+        User user = userUtils.getCurrentUser();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName(Links.USER_PROFILE);
         return modelAndView;
     }
 }

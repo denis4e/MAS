@@ -2,47 +2,36 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="tag" tagdir="/WEB-INF/tags" %>
 
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Bootstrap core CSS -->
-    <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-    <link href="<c:url value="/resources/css/custom/loginStyle.css" />" rel="stylesheet">
-</head>
+<!-- header-->
+<spring:message code="user.profile.page.title" var="title"/>
+<tag:headWrapper pageTitle="${title}"/>
 
+<html>
 <body>
-<c:import url="../tempates/topNavigationMenu.jsp"/>
-<c:import url="../tempates/login.jsp"/>
+
+<!-- Top Menu-->
+<c:import url="../templates/topNavigationMenu.jsp"/>
+
+<!-- Login Page-->
+<c:import url="../templates/login.jsp"/>
+
+<!-- Messages-->
+<tag:messages successMessage="${successMessage}" infoMessage="${infoMessage}" errorMessage="${errorMessage}"/>
 
 <!-- Page Content -->
 <div class="container">
     <div class="row">
-
-        <h3><spring:message code="label.users"/></h3>
-        <c:if test="${!empty userList}">
-            <table class="data">
-                <tr>
-                    <th><spring:message code="label.login"/></th>
-                    <th><spring:message code="label.password"/></th>
-                    <th><spring:message code="label.email"/></th>
-                    <th><spring:message code="label.telephone"/></th>
-                    <th>&nbsp;</th>
-                </tr>
-                <c:forEach items="${userList}" var="user">
-                    <tr>
-                        <td>${user.login}</td>
-                        <td>${user.password}</td>
-                        <td>${user.email}</td>
-                        <td>${user.telephone}</td>
-                        <td><a href="delete/${user.id_user}">Delete</a></td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </c:if>
+            <spring:message code="user.profile.login"/>
+            <spring:message code="user.profile.email"/>
+            <spring:message code="user.profile.phone"/>
+        
+            ${user.login}
+            ${user.password}
+            ${user.email}
+            ${user.phone}
     </div>
 </div>
 

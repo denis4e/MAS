@@ -3,6 +3,7 @@ package com.mas.controller;
 import com.mas.Messages;
 import com.mas.util.Links;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 
     @Autowired
-    Messages messages;
+    private Messages messages;
+    @Autowired
+    private AuthenticationTrustResolver authenticationTrustResolver;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String userLogin() {
@@ -23,14 +26,11 @@ public class LoginController {
 
     @RequestMapping(value = "/signIn", method = RequestMethod.GET)
     public ModelAndView signIn() {
-
         ModelAndView model = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
+        if (!authenticationTrustResolver.isAnonymous(auth)) {
             model.getModel().put("successMessage", messages.get("successMessage.login.success", auth.getName()));
-        }
-        if (auth.getName().equals("anonymousUser")) {
+        } else {
             model.getModel().put("errorMessage", messages.get("errorMessage.invalid.credentials.provided"));
         }
         model.setViewName(Links.HOME);
