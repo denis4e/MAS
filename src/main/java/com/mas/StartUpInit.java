@@ -6,6 +6,7 @@ import com.mas.dao.repository.UserRepository;
 import com.mas.domain.Role;
 import com.mas.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +15,11 @@ import javax.annotation.PostConstruct;
 @Component
 public class StartUpInit {
 
+    @Qualifier("userRepository")
     @Autowired
     private UserRepository userRepository;
 
+    @Qualifier("roleRepository")
     @Autowired
     private RoleRepository roleRepository;
 
