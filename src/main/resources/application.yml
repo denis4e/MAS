@@ -25,7 +25,7 @@ spring:
     mail:
         default-encoding: UTF-8
         host: smtp.gmail.com
-        password: denis07qaz
+        password: 9eveloperAccount
         port: 587
         properties:
             mail:
@@ -36,13 +36,13 @@ spring:
                         required: true
         protocol: smtp
         test-connection: false
-        username: denis.sosulev@gmail.com
+        username: 9ev.home@gmail.com
 
 
 facebook:
         client:
-            clientId: 330592920763743
-            clientSecret: b6c5fffa069f82690695c385c13ae191
+            clientId: 238836443588535
+            clientSecret: fb043dedc08a65ab06e98c4cc535231b
             accessTokenUri: https://graph.facebook.com/oauth/access_token
             userAuthorizationUri: https://www.facebook.com/dialog/oauth
             tokenName: oauth_token
