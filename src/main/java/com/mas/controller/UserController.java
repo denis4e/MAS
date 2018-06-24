@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
@@ -23,7 +24,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -63,7 +63,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/createNewUser", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) throws MessagingException, IOException, TemplateException {
         ModelAndView modelAndView = new ModelAndView();
         User userEmailExists = userRepository.findUserByEmail(user.getEmail());
@@ -133,6 +133,23 @@ public class UserController {
     @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
     public ModelAndView userProfile() {
         ModelAndView modelAndView = new ModelAndView();
+        User user = userUtils.getCurrentUser();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName(Links.USER_PROFILE);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView updateUser(@RequestParam("userId") int userId, @RequestParam("phone") String phone,
+                                   @RequestParam("email") String email, @RequestParam("userName") String userName, @RequestParam("lastName") String lastName) {
+        ModelAndView modelAndView = new ModelAndView();
+        int result = userRepository.updateUser(userId, phone, email, userName, lastName);
+        if (result > 0) {
+            modelAndView.addObject("successMessage", messages.get("successMessage.user.updated"));
+        } else {
+            modelAndView.addObject("errorMessage", messages.get("errorMessage.user.not.updated"));
+        }
         User user = userUtils.getCurrentUser();
         modelAndView.addObject("user", user);
         modelAndView.setViewName(Links.USER_PROFILE);

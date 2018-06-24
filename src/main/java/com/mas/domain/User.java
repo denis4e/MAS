@@ -27,7 +27,7 @@ public class User {
     private String password;
 
     @Column(name = "login")
-    @NotEmpty
+    @Length(min = 5)
     private String login;
 
     @Column(name = "userName")

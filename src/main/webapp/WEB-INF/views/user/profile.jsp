@@ -1,8 +1,7 @@
-</html>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="tag" tagdir="/WEB-INF/tags" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <!-- header-->
@@ -24,19 +23,65 @@
 <!-- Page Content -->
 <div class="container">
     <div class="row">
-            <spring:message code="user.profile.login"/>
-            <spring:message code="user.profile.email"/>
-            <spring:message code="user.profile.phone"/>
-        
-            ${user.login}
-            ${user.password}
-            ${user.email}
-            ${user.phone}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form:form method="post" action="updateUser" modelAttribute="user" cssClass="form-horizontal">
+                    <input type="text" class="hidden" name="userId" value="${user.id_user}" id="userId">
+                    <div class="form-group ">
+                        <label for="login" class="col-sm-4 control-label">
+                            <spring:message code="user.profile.login"/>
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" disabled class="form-control" name="login" value="${user.login}" id="login">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="email" class="col-sm-4 control-label">
+                            <spring:message code="user.profile.email"/>
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="email" value="${user.email}" id="email">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="userName" class="col-sm-4 control-label">
+                            <spring:message code="user.profile.userName"/>
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="userName" value="${user.userName}" id="userName">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="lastName" class="col-sm-4 control-label">
+                            <spring:message code="user.profile.lastName"/>
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="lastName" value="${user.lastName}" id="lastName">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="phone" class="col-sm-4 control-label">
+                            <spring:message code="user.profile.phone"/>
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="phone" value="${user.phone}" id="phone">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="text-center">
+                                <button class="btn btn-primary btn-lg">
+                                    <spring:message code="user.profile.save"/></button>
+                            </div>
+                        </div>
+                    </div>
+                </form:form>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript -->
-<script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- footer-->
+<tag:footerWrapper/>
 </body>
 </html>

@@ -1,10 +1,12 @@
 package com.mas.dao.repository;
 
 import com.mas.domain.User;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository("userRepository")
 public interface UserRepository extends CrudRepository<User, Long> {
@@ -16,4 +18,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.fbId = :fbId")
     User findUserByfbId(@Param("fbId") String fbId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update User  set email=:email, phone=:phone, user_name=:userName, last_name=:lastName where id_user=:userId", nativeQuery = true)
+    int updateUser(@Param("userId") int userId, @Param("phone") String phone, @Param("email") String email, @Param("userName") String userName, @Param("lastName") String lastName);
 }

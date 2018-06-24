@@ -24,7 +24,7 @@
     <div class="row">
         <div class="panel panel-default">
             <div class="panel-body">
-                <form:form method="post" action="save" commandName="user" cssClass="form-horizontal">
+                <form:form method="post" action="createNewUser" commandName="user" cssClass="form-horizontal">
                     <h2><spring:message code="registration.page.title"/></h2>
                     <div class="form-group">
                         <div class="col-sm-12">
