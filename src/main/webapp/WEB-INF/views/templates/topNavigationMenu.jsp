@@ -1,14 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Denis
-  Date: 10.01.2018
-  Time: 17:45
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page import="com.mas.util.Links" %>
 
 <!-- top menu -->
 <nav class="navbar navbar-inverse">
@@ -45,10 +39,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <security:authorize access="hasRole('ROLE_USER')">
-                                <li><a href="<c:url value="/user/userProfile" />"><spring:message code="homePage.profile"/></a></li>
+                                <li><a href="<c:url value="/user/userProfile" />"><spring:message
+                                        code="homePage.profile"/></a></li>
                             </security:authorize>
                             <security:authorize access="hasRole('ROLE_ADMIN')">
-                                <li><a href="<c:url value="/user/registeredUsers" />"> <spring:message code="homePage.users"/></a></li>
+                                <li><a href="<c:url value="${Links.USERS_LIST}" />"> <spring:message
+                                        code="homePage.users"/></a></li>
                             </security:authorize>
                             <c:if test="${pageContext.request.userPrincipal.name != null}">
                                 <li>

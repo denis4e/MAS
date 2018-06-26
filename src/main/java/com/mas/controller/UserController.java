@@ -10,6 +10,7 @@ import com.mas.service.UserUtil;
 import com.mas.util.Links;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -33,9 +34,11 @@ public class UserController {
     @Autowired
     private EmailService sendingMailService;
 
+    @Qualifier("userRepository")
     @Autowired
     private UserRepository userRepository;
 
+    @Qualifier("roleRepository")
     @Autowired
     private RoleRepository roleRepository;
 
@@ -90,19 +93,6 @@ public class UserController {
             modelAndView.addObject("user", new User());
             modelAndView.setViewName(Links.HOME);
             sendingMailService.sendMessage(user, messages.get("email.userRegistered.subject"), "userRegistered");
-        }
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/registeredUsers", method = RequestMethod.GET)
-    public ModelAndView registeredUsers() {
-        ModelAndView modelAndView = new ModelAndView();
-        Iterable<User> userExists = userRepository.findAll();
-        if (userExists != null) {
-            modelAndView.addObject("userList", userExists);
-        } else {
-            modelAndView.addObject("errorMessage", messages.get("errorMessage.user.list.null"));
-            modelAndView.setViewName(Links.USERS_LIST);
         }
         return modelAndView;
     }

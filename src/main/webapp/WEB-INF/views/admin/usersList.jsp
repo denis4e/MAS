@@ -35,11 +35,13 @@
                             <td>${user.login}</td>
                             <td>${user.email}</td>
                             <td>${user.phone}</td>
-                            <td><a href="delete/${user.id_user}">Delete</a></td>
+                            <td><a href="admin/delete/${user.id_user}">Delete</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
+                <!-- pagination-->
+                <tag:pagination/>
             </div>
         </div>
     </div>
