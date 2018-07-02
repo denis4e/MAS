@@ -6,6 +6,7 @@ spring:
         name: mas
     datasource:
         validationQuery: SELECT 1
+        url: jdbc:mysql://localhost:3306/mas?autoReconnect=true&useSSL=false
     freemarker:
         charset: UTF-8
         content-type: text/html

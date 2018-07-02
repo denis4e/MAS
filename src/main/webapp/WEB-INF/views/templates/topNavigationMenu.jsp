@@ -43,7 +43,7 @@
                                         code="homePage.profile"/></a></li>
                             </security:authorize>
                             <security:authorize access="hasRole('ROLE_ADMIN')">
-                                <li><a href="<c:url value="${Links.USERS_LIST}" />"> <spring:message
+                                <li><a href="<c:url value="/admin/usersList" />"> <spring:message
                                         code="homePage.users"/></a></li>
                             </security:authorize>
                             <c:if test="${pageContext.request.userPrincipal.name != null}">
