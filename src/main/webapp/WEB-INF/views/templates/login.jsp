@@ -34,6 +34,11 @@
                                     With Facebook: <a href="/mas/connect/facebook">click here</a>
                                 </div>
                             </div>
+                            <div>
+                                <div>
+                                    With Google: <a href="/mas/connect/google">click here</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,9 +51,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    if (window.location.hash && window.location.hash == '#_=_') {
-        window.location = 'facebook';
-    }
-</script>
 

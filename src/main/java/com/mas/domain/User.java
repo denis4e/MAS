@@ -41,6 +41,9 @@ public class User {
     @Column(name = "fbId")
     private String fbId;
 
+    @Column(name = "googleId")
+    private String googleId;
+
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -131,6 +134,14 @@ public class User {
 
     public void setFbId(String fbId) {
         this.fbId = fbId;
+    }
+
+    public String getGoogleId() {
+        return googleId;
+    }
+
+    public void setGoogleId(String googleId) {
+        this.googleId = googleId;
     }
 }
 

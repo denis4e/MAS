@@ -1,6 +1,9 @@
 package com.mas;
 
+import com.mas.handler.CustomFacebookAuthenticationSuccessHandler;
+import com.mas.handler.CustomGoogleAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -33,12 +36,19 @@ import java.util.List;
 @EnableOAuth2Client
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Qualifier("dataSource")
     @Autowired
     DataSource dataSource;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Qualifier("oauth2ClientContext")
     @Autowired
     private OAuth2ClientContext oauth2ClientContext;
+    @Autowired
+    private CustomFacebookAuthenticationSuccessHandler customFacebookAuthenticationSuccessHandler;
+    @Autowired
+    private CustomGoogleAuthenticationSuccessHandler customGoogleAuthenticationSuccessHandler;
+
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.userDetailsService(userDetailsService)
@@ -77,23 +87,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CompositeFilter filter = new CompositeFilter();
         List filters = new ArrayList<>();
 
-        OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter(
-                "/connect/facebook");
+        OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter("/connect/facebook");
         OAuth2RestTemplate facebookTemplate = new OAuth2RestTemplate(facebook(), oauth2ClientContext);
-
         facebookFilter.setRestTemplate(facebookTemplate);
         UserInfoTokenServices tokenServices = new UserInfoTokenServices(facebookResource().getUserInfoUri(),
                 facebook().getClientId());
         tokenServices.setRestTemplate(facebookTemplate);
         facebookFilter.setTokenServices(tokenServices);
+        facebookFilter.setAuthenticationSuccessHandler(customFacebookAuthenticationSuccessHandler);
 
-        OAuth2ClientAuthenticationProcessingFilter googleFilter = new OAuth2ClientAuthenticationProcessingFilter(
-                "/connect/google");
+        OAuth2ClientAuthenticationProcessingFilter googleFilter = new OAuth2ClientAuthenticationProcessingFilter("/connect/google");
         OAuth2RestTemplate googleTemplate = new OAuth2RestTemplate(google(), oauth2ClientContext);
         googleFilter.setRestTemplate(googleTemplate);
         tokenServices = new UserInfoTokenServices(googleResource().getUserInfoUri(), google().getClientId());
         tokenServices.setRestTemplate(googleTemplate);
         googleFilter.setTokenServices(tokenServices);
+        googleFilter.setAuthenticationSuccessHandler(customGoogleAuthenticationSuccessHandler);
 
         OAuth2ClientAuthenticationProcessingFilter linkedInFilter = new OAuth2ClientAuthenticationProcessingFilter(
                 "/connect/linkedIn");

@@ -17,7 +17,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findUserByLogin(@Param("login") String login);
 
     @Query("SELECT u FROM User u WHERE u.fbId = :fbId")
-    User findUserByfbId(@Param("fbId") String fbId);
+    User findUserByFaceBookId(@Param("fbId") String fbId);
+
+    @Query("SELECT u FROM User u WHERE u.googleId = :googleId")
+    User findUserByGoogleId(@Param("googleId") String googleId);
 
     @Modifying
     @Transactional

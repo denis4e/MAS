@@ -66,37 +66,6 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/createNewUser", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) throws MessagingException, IOException, TemplateException {
-        ModelAndView modelAndView = new ModelAndView();
-        User userEmailExists = userRepository.findUserByEmail(user.getEmail());
-        User userLoginExists = userRepository.findUserByLogin(user.getLogin());
-
-        if (userEmailExists != null) {
-            bindingResult
-                    .rejectValue("email", "errorMessage.userEmail.exists", "");
-        }
-        if (userLoginExists != null) {
-            bindingResult
-                    .rejectValue("login", "errorMessage.userLogin.exists", "");
-        }
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName(Links.REGISTRATION);
-        } else {
-            String password = user.getPassword();
-            user.setPassword(bCryptPasswordEncoder.encode(password));
-            Role userRole = roleRepository.findRoleByRoleName("ROLE_USER");
-            userRole.getUsers().add(user);
-            user.getRoles().add(userRole);
-            userRepository.save(user);
-            modelAndView.addObject("successMessage", messages.get("successMessage.check.email"));
-            modelAndView.addObject("user", new User());
-            modelAndView.setViewName(Links.HOME);
-            sendingMailService.sendMessage(user, messages.get("email.userRegistered.subject"), "userRegistered");
-        }
-        return modelAndView;
-    }
-
     @RequestMapping(value = "/sendPasswordToEmail", method = RequestMethod.GET)
     public ModelAndView sendPasswordToEmail(@RequestParam("email") String email) throws MessagingException, IOException, TemplateException {
         User user = userRepository.findUserByEmail(email);
@@ -143,6 +112,37 @@ public class UserController {
         User user = userUtils.getCurrentUser();
         modelAndView.addObject("user", user);
         modelAndView.setViewName(Links.USER_PROFILE);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/registerNewUser", method = RequestMethod.POST)
+    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) throws MessagingException, IOException, TemplateException {
+        ModelAndView modelAndView = new ModelAndView();
+        User userEmailExists = userRepository.findUserByEmail(user.getEmail());
+        User userLoginExists = userRepository.findUserByLogin(user.getLogin());
+
+        if (userEmailExists != null) {
+            bindingResult
+                    .rejectValue("email", "errorMessage.userEmail.exists", "");
+        }
+        if (userLoginExists != null) {
+            bindingResult
+                    .rejectValue("login", "errorMessage.userLogin.exists", "");
+        }
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName(Links.REGISTRATION);
+        } else {
+            String password = user.getPassword();
+            user.setPassword(bCryptPasswordEncoder.encode(password));
+            Role userRole = roleRepository.findRoleByRoleName("ROLE_USER");
+            userRole.getUsers().add(user);
+            user.getRoles().add(userRole);
+            userRepository.save(user);
+            modelAndView.addObject("successMessage", messages.get("successMessage.check.email"));
+            modelAndView.addObject("user", new User());
+            modelAndView.setViewName(Links.HOME);
+            sendingMailService.sendMessage(user, messages.get("email.userRegistered.subject"), "userRegistered");
+        }
         return modelAndView;
     }
 }

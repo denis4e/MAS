@@ -90,7 +90,7 @@ public class MvcWebConfig extends WebMvcConfigurerAdapter {
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/mas");
+        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/mas?useSSL=false");
         driverManagerDataSource.setUsername("root");
         driverManagerDataSource.setPassword("root");
         return driverManagerDataSource;
@@ -117,14 +117,6 @@ public class MvcWebConfig extends WebMvcConfigurerAdapter {
         return jdbcImpl;
     }
 
-
-    @Bean
-    public FilterRegistrationBean oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(filter);
-        registration.setOrder(-100);
-        return registration;
-    }
 
     @Bean
     public AuthenticationTrustResolver authenticationTrustResolver(){
