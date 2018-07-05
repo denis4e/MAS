@@ -1,10 +1,8 @@
 package com.mas.controller;
 
-import com.mas.Messages;
-import com.mas.dao.repository.RoleRepository;
+import com.mas.util.Messages;
 import com.mas.dao.repository.UserRepository;
 import com.mas.domain.User;
-import com.mas.service.EmailService;
 import com.mas.service.SocialNetworksLoginService;
 import com.mas.service.UserUtil;
 import com.mas.util.Links;
