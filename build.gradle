@@ -1,6 +1,8 @@
+ext['groovy.version'] = '2.5.0'
 buildscript {
     ext {
-        springBootVersion = '1.5.3.RELEASE'
+        springBootVersion = '1.5.14.RELEASE'
+
     }
     repositories {
         mavenCentral()
@@ -14,6 +16,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
+apply plugin: 'groovy'
 
 version = '0.0.1-SNAPSHOT'
 
@@ -29,6 +32,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile("org.springframework.boot:spring-boot-starter-security")
+    compile('org.codehaus.groovy:groovy-all:2.5.0')
     compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '3.2.0.RELEASE'
     compile("org.springframework.security.oauth:spring-security-oauth2:2.0.8.RELEASE")
     compile(group: 'org.json', name: 'json', version: '20180130')
@@ -44,4 +48,3 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
 }
-

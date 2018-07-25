@@ -14,8 +14,8 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idUser")
-    private int id_user;
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "email")
     @Email
@@ -56,12 +56,15 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
 
+    @OneToOne(mappedBy = "user")
+    private UserProfile userProfile;
+
     public int getId_user() {
-        return id_user;
+        return id;
     }
 
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
+    public void setId_user(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -142,6 +145,14 @@ public class User {
 
     public void setGoogleId(String googleId) {
         this.googleId = googleId;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 }
 

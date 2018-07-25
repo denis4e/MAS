@@ -4,8 +4,6 @@ server:
 spring:
     application:
         name: mas
-    datasource:
-        validationQuery: SELECT 1
     freemarker:
         charset: UTF-8
         content-type: text/html

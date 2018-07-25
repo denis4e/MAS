@@ -10,11 +10,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -27,7 +29,6 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.filter.CompositeFilter;
 
 import javax.servlet.Filter;
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,6 @@ import java.util.List;
 @EnableOAuth2Client
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("dataSource")
-    @Autowired
-    DataSource dataSource;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Qualifier("oauth2ClientContext")
@@ -52,10 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.userDetailsService(userDetailsService)
-        auth.jdbcAuthentication().dataSource(dataSource)
+        auth.jdbcAuthentication().dataSource(dataSource())
                 .usersByUsernameQuery("select login, password, enabled from user where login=? and enabled=1 ")
                 .authoritiesByUsernameQuery("select u.login, r.role_name from user_roles ur " +
-                        " inner join user u on u.id_user=ur.user_id " +
+                        " inner join user u on u.id=ur.user_id " +
                         " inner join roles r on r.id=ur.role_id where u.login=? ")
                 .passwordEncoder(bCryptPasswordEncoder);
     }
@@ -185,4 +183,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public ResourceServerProperties twitterResource() {
         return new ResourceServerProperties();
     }
+
+    @Bean(name = "dataSource")
+    public DriverManagerDataSource dataSource() {
+        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+        driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/studio?useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
+        driverManagerDataSource.setUsername("root");
+        driverManagerDataSource.setPassword("root");
+        return driverManagerDataSource;
+    }
+
+    @Bean(name = "userDetailsService")
+    public UserDetailsService userDetailsService() {
+        JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
+        jdbcImpl.setDataSource(dataSource());
+        jdbcImpl.setUsersByUsernameQuery("select login, password, enabled from user where login=? and enabled=1 ");
+        jdbcImpl.setAuthoritiesByUsernameQuery("select u.login, r.role_name from user_roles ur " +
+                " inner join user u on u.id_user=ur.user_id " +
+                " inner join roles r on r.id=ur.role_id where u.login=? ");
+        return jdbcImpl;
+    }
+
 }

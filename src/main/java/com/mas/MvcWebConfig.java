@@ -2,21 +2,15 @@ package com.mas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -32,7 +26,6 @@ import java.util.Locale;
 
 @Configuration
 @ComponentScan(basePackages = "com.mas")
-@EnableOAuth2Client
 @SpringBootApplication
 public class MvcWebConfig extends WebMvcConfigurerAdapter {
 
@@ -86,16 +79,6 @@ public class MvcWebConfig extends WebMvcConfigurerAdapter {
         return messageSource;
     }
 
-    @Bean(name = "dataSource")
-    public DriverManagerDataSource dataSource() {
-        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/mas?useSSL=false");
-        driverManagerDataSource.setUsername("root");
-        driverManagerDataSource.setPassword("root");
-        return driverManagerDataSource;
-    }
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -105,18 +88,6 @@ public class MvcWebConfig extends WebMvcConfigurerAdapter {
 
         return bCryptPasswordEncoder;
     }
-
-    @Bean(name = "userDetailsService")
-    public UserDetailsService userDetailsService() {
-        JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
-        jdbcImpl.setDataSource(dataSource());
-        jdbcImpl.setUsersByUsernameQuery("select login, password, enabled from user where login=? and enabled=1 ");
-        jdbcImpl.setAuthoritiesByUsernameQuery("select u.login, r.role_name from user_roles ur " +
-                " inner join user u on u.id_user=ur.user_id " +
-                " inner join roles r on r.id=ur.role_id where u.login=? ");
-        return jdbcImpl;
-    }
-
 
     @Bean
     public AuthenticationTrustResolver authenticationTrustResolver(){

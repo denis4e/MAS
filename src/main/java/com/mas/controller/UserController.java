@@ -1,8 +1,8 @@
 package com.mas.controller;
 
 import com.mas.util.Messages;
-import com.mas.dao.repository.RoleRepository;
-import com.mas.dao.repository.UserRepository;
+import com.mas.repository.RoleRepository;
+import com.mas.repository.UserRepository;
 import com.mas.domain.Role;
 import com.mas.domain.User;
 import com.mas.service.EmailService;
@@ -17,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.MessagingException;
@@ -89,31 +88,6 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/userProfile", method = RequestMethod.GET)
-    public ModelAndView userProfile() {
-        ModelAndView modelAndView = new ModelAndView();
-        User user = userUtils.getCurrentUser();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName(Links.USER_PROFILE);
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-    @ResponseBody
-    public ModelAndView updateUser(@RequestParam("userId") int userId, @RequestParam("phone") String phone,
-                                   @RequestParam("email") String email, @RequestParam("userName") String userName, @RequestParam("lastName") String lastName) {
-        ModelAndView modelAndView = new ModelAndView();
-        int result = userRepository.updateUser(userId, phone, email, userName, lastName);
-        if (result > 0) {
-            modelAndView.addObject("successMessage", messages.get("successMessage.user.updated"));
-        } else {
-            modelAndView.addObject("errorMessage", messages.get("errorMessage.user.not.updated"));
-        }
-        User user = userUtils.getCurrentUser();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName(Links.USER_PROFILE);
-        return modelAndView;
-    }
 
     @RequestMapping(value = "/registerNewUser", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) throws MessagingException, IOException, TemplateException {

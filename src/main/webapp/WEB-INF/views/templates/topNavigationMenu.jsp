@@ -39,7 +39,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <security:authorize access="hasRole('ROLE_USER')">
-                                <li><a href="<c:url value="/user/userProfile" />"><spring:message
+                                <li><a href="<c:url value="/profile/userProfile" />"><spring:message
                                         code="homePage.profile"/></a></li>
                             </security:authorize>
                             <security:authorize access="hasRole('ROLE_ADMIN')">

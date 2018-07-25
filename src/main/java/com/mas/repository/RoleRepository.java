@@ -1,4 +1,4 @@
-package com.mas.dao.repository;
+package com.mas.repository;
 
 import com.mas.domain.Role;
 import org.springframework.data.jpa.repository.Query;

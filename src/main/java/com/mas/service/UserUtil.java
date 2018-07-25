@@ -1,6 +1,6 @@
 package com.mas.service;
 
-import com.mas.dao.repository.UserRepository;
+import com.mas.repository.UserRepository;
 import com.mas.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

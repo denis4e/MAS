@@ -36,7 +36,7 @@
                             </div>
                             <div>
                                 <div>
-                                    With Google: <a href="/mas/connect/google">click here</a>
+                                    <a href="${pageContext.request.contextPath}/connect/google"><button class="btn btn-facebook"><i class="icon-facebook"></i> | <spring:message code="loginPage.facebook.sign.in.button"/></button></a>
                                 </div>
                             </div>
                         </div>
